@@ -1,0 +1,24 @@
+<template>
+  <div class="slds-p-around_x-small">
+    <c-multi-pick-list
+      label="Pick-List"
+      options={msOptions}
+      showclearbutton="true"
+      showfilterinput="true"
+      showrefreshbutton="true"
+      onitemselected={handleOnItemSelected}
+    ></c-multi-pick-list>
+  </div>
+  <div class="slds-p-around_x-small">
+    <button onclick={getSelectedItems}>ShowMyValues</button>
+  </div>
+  <div class="slds-p-around_x-small">{yourSelectedValues}</div>
+
+  <lightning-input
+    label="Enquirer"
+    name="display"
+    type="textarea"
+    value={disName}
+  ></lightning-input>
+  <lightning-button label="Send" onclick={handleSend}></lightning-button>
+</template>

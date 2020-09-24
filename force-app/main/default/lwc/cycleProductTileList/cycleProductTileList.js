@@ -3,7 +3,7 @@ import { LightningElement, wire } from "lwc";
 import { publish, subscribe, MessageContext } from "lightning/messageService";
 import PRODUCT_FILTER_MESSAGE from "@salesforce/messageChannel/ProductsFiltered__c";
 import PRODUCT_SELECTED_MESSAGE from "@salesforce/messageChannel/ProductSelected__c";
-
+import { refreshApex } from "@salesforce/apex";
 import getProducts from "@salesforce/apex/ProductController.getProducts";
 
 export default class CycleProductTileList extends LightningElement {
@@ -19,12 +19,23 @@ export default class CycleProductTileList extends LightningElement {
   @wire(getProducts, { filters: "$filters", pageNumber: "$pageNumber" })
   products;
 
+  @wire(getProducts, { filters: "$filters", pageNumber: "$pageNumber" })
+  products2({ error, data }) {
+    if (data) {
+      console.log("success");
+    } else {
+      console.log(error);
+    }
+  }
+
   connectedCallback() {
     this.productFilterSubscription = subscribe(
       this.messageContext,
       PRODUCT_FILTER_MESSAGE,
       (message) => this.handleFilterChange(message)
     );
+
+    refreshApex(this.products2);
   }
 
   handleFilterChange(message) {

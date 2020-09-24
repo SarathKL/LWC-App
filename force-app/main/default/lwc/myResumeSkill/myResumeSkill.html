@@ -1,0 +1,29 @@
+<template>
+  <section class="slds-var-p-left_medium">
+    <h2>Resume Skills</h2>
+    <h2 class="section_heading">{skillDetails.HEADING}</h2>
+
+    <div>
+      <template for:each={skillDetails.SKILLS} for:item="skill">
+        <div key={skill.HEADING} class="slds-var-m-top_medium">
+          <h3 class="section_subHeading">{skill.HEADING}</h3>
+          <template for:each={skill.SKILLS_LIST} for:item="skillList">
+            <div key={skillList.Name} class="slds-var-m-top_x-small">
+              <div class="subText">{skillList.NAME}</div>
+              <c-my-resume-progress-bar
+                progress-value={skillList.LEVEL}
+              ></c-my-resume-progress-bar>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <div>
+        <c-my-resume-tag
+          tag-list={skillDetails.OTHERS_SKILLS.SKILLS_LIST}
+          heading={skillDetails.OTHERS_SKILLS.HEADING}
+        ></c-my-resume-tag>
+      </div>
+    </div>
+  </section>
+</template>
