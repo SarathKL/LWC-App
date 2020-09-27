@@ -10,15 +10,15 @@
     <lightning-layout>
       <lightning-layout-item padding="around-small" size="12">
         <ul class="slds-has-dividers_around-space">
-          <template if:true={todoTasks.data}>
-            <template for:each={todoTasks.data} for:item="todoTask">
-              <li key={todoTask.Id} class="slds-item">
+          <template if:true={todoTasks}>
+            <template for:each={todoTasks} for:item="todoTask">
+              <li key={todoTask.id} class="slds-item">
                 <lightning-layout
                   vertical-align="center"
                   horizontal-align="spread"
                 >
                   <lightning-layout-item padding="horizontal-small" size="8">
-                    {todoTask.Subject}
+                    {todoTask.name}
                   </lightning-layout-item>
                   <lightning-layout-item padding="horizontal-small" size="4">
                     <div class="slds-float_right">
@@ -36,7 +36,7 @@
             </template>
           </template>
 
-          <template if:false={todoTasks.data}>
+          <template if:false={todoTasks}>
             <span>There is no item to display</span>
           </template>
         </ul>
