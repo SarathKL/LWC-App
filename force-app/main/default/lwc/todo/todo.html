@@ -10,22 +10,35 @@
     <lightning-layout>
       <lightning-layout-item padding="around-small" size="12">
         <ul class="slds-has-dividers_around-space">
-          <li class="slds-item">
-            <lightning-layout vertical-align="center" horizontal-align="spread">
-              <lightning-layout-item padding="horizontal-small" size="8">
-                Task1
-              </lightning-layout-item>
-              <lightning-layout-item padding="horizontal-small" size="4">
-                <div class="slds-float_right">
-                  <lightning-button-icon
-                    icon-name="utility:delete"
-                    alternative-text="delete"
-                    title="Delete"
-                  ></lightning-button-icon>
-                </div>
-              </lightning-layout-item>
-            </lightning-layout>
-          </li>
+          <template if:true={todoTasks.data}>
+            <template for:each={todoTasks.data} for:item="todoTask">
+              <li key={todoTask.Id} class="slds-item">
+                <lightning-layout
+                  vertical-align="center"
+                  horizontal-align="spread"
+                >
+                  <lightning-layout-item padding="horizontal-small" size="8">
+                    {todoTask.Subject}
+                  </lightning-layout-item>
+                  <lightning-layout-item padding="horizontal-small" size="4">
+                    <div class="slds-float_right">
+                      <lightning-button-icon
+                        icon-name="utility:delete"
+                        alternative-text="delete"
+                        title="Delete"
+                        data-task={todoTask.id}
+                        onclick={handleDelete}
+                      ></lightning-button-icon>
+                    </div>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </li>
+            </template>
+          </template>
+
+          <template if:false={todoTasks.data}>
+            <span>There is no item to display</span>
+          </template>
         </ul>
       </lightning-layout-item>
     </lightning-layout>
@@ -39,12 +52,17 @@
             variant="label-hidden"
             placeholder="Enter new task"
             value={newTask}
+            onchange={updateNewTask}
             required
           ></lightning-input>
         </lightning-layout-item>
 
         <lightning-layout-item padding="horizontal-small">
-          <lightning-button label="Add" variant="brand"></lightning-button>
+          <lightning-button
+            label="Add"
+            variant="brand"
+            onclick={handlerAdd}
+          ></lightning-button>
         </lightning-layout-item>
       </lightning-layout>
     </p>
