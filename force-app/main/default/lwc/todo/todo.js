@@ -5,6 +5,7 @@ import { refreshApex } from "@salesforce/apex";
 import deleteTask from "@salesforce/apex/ToDoListController.deleteTask";
 
 export default class Todo extends LightningElement {
+  processing = true;
   newTask = "";
 
   todoTaskResponse;
@@ -16,6 +17,10 @@ export default class Todo extends LightningElement {
   getTodoTasks(response) {
     let data = response.data;
     let error = response.error;
+
+    if (data || error) {
+      this.processing = false;
+    }
 
     this.todoTaskResponse = response;
 
@@ -43,10 +48,18 @@ export default class Todo extends LightningElement {
   }
 
   handlerAdd() {
+    if (this.newTask === "") {
+      return;
+    }
+
+    this.processing = true;
+
+    let taskLastIndex = this.todoTasks.length ? this.todoTasks.length - 1 : 0;
+
     insertTask({ subject: this.newTask })
       .then((result) => {
         this.todoTasks.push({
-          id: this.todoTasks.length + 1,
+          id: this.todoTasks[taskLastIndex].id + 1,
           name: this.newTask,
           recordId: result.Id
         });
@@ -55,10 +68,15 @@ export default class Todo extends LightningElement {
         console.log("result ::", result);
         console.log("todo ::", this.todoTasks);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.processing = false;
+      });
   }
 
   handleDelete(event) {
+    this.processing = true;
+
     const existingTaskIndex = event.target.dataset.task;
 
     const taskIndex = this.todoTasks.findIndex((task) => {
@@ -70,10 +88,17 @@ export default class Todo extends LightningElement {
         this.todoTasks.splice(taskIndex, 1);
         console.log(result);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.processing = false;
+      });
   }
 
   handleRefresh() {
-    refreshApex(this.todoTaskResponse);
+    this.processing = true;
+
+    refreshApex(this.todoTaskResponse).finally(() => {
+      this.processing = false;
+    });
   }
 }

@@ -10,6 +10,13 @@
 
     <lightning-layout>
       <lightning-layout-item padding="around-small" size="12">
+        <template if:true={processing}>
+          <lightning-spinner
+            alternative-text="Loading"
+            size="small"
+          ></lightning-spinner>
+        </template>
+
         <ul class="slds-has-dividers_around-space">
           <template if:true={todoTasks}>
             <template for:each={todoTasks} for:item="todoTask">
@@ -54,6 +61,7 @@
             placeholder="Enter new task"
             value={newTask}
             onchange={updateNewTask}
+            autocomplete="off"
             required
           ></lightning-input>
         </lightning-layout-item>
