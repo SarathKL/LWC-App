@@ -2,8 +2,8 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Account with reconrd form</masterLabel>
-	<description>Component to create and manage a todo list</description>
+    <masterLabel>Contact creator</masterLabel>
+	<description>Component to create contact</description>
      <targets>
 			<target>lightning__AppPage</target>
 			<target>lightning__HomePage</target>
