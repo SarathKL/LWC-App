@@ -21,4 +21,8 @@ export default class ContactList extends LightningElement {
   columns = COLUMS;
   @wire(getContacts)
   contacts;
+
+  get isLoading() {
+    return !this.contacts.data && !this.contacts.error;
+  }
 }
