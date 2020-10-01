@@ -1,0 +1,16 @@
+<template>
+  <lightning-card>
+    <template if:true={accounts.data}>
+      <lightning-datatable
+        data={accounts.data}
+        columns={columns}
+        key-field="Id"
+        onrowselection={handleSelectedRows}
+      >
+      </lightning-datatable>
+    </template>
+    <template if:false={accounts.data}>
+      <span>There are no records to display.</span>
+    </template>
+  </lightning-card>
+</template>
