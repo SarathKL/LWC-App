@@ -1,5 +1,7 @@
 <template>
-  <lightning-card>
+  <lightning-card style="width: 100%">
+    <!-- <lightning-button label="New" slot="actions"></lightning-button> -->
+    <span slot="actions">Creator {name}</span>
     <lightning-record-form
       object-api-name={objectApiName}
       fields={fields}
