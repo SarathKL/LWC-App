@@ -16,6 +16,8 @@ import { getRecord, getFieldValue } from "lightning/uiRecordApi";
 import Id from "@salesforce/user/Id";
 import USER_NAME_FIELD from "@salesforce/schema/User.Name";
 
+import ACCOUNT_NAME_FIELD from "@salesforce/schema/Account.Name";
+
 export default class AccountCreatorWithRecordForm extends LightningElement {
   objectApiName = ACCOUNT_OBJECT;
   fields = [NAME_FIELD, REVENUE_FIELD, INDUSTRY_FIELD];
@@ -30,6 +32,14 @@ export default class AccountCreatorWithRecordForm extends LightningElement {
     console.log(JSON.stringify(this.user.data));
     return getFieldValue(this.user.data, USER_NAME_FIELD);
   }
+
+  @wire(getRecord, { recordId: "$recordId", fields: [ACCOUNT_NAME_FIELD] })
+  account;
+
+  get accountName() {
+    return getFieldValue(this.account.data, ACCOUNT_NAME_FIELD);
+  }
+
   handleSuccess(event) {
     const toastEvent = new ShowToastEvent({
       title: "Account created",
@@ -39,5 +49,8 @@ export default class AccountCreatorWithRecordForm extends LightningElement {
     this.dispatchEvent(toastEvent);
 
     refreshApex(this.user);
+    this.recordId = event.detail.id;
+
+    console.log("accountName :::", JSON.stringify(this.account));
   }
 }
