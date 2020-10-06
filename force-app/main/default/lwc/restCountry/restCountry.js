@@ -1,5 +1,5 @@
 import { LightningElement, track } from "lwc";
-import getRestCountries from "@salesforce/apex/RestCountryController.getRestCountries";
+import fetchRestCountries from "@salesforce/apex/RestCountryController.fetchRestCountries";
 import pushCountriesBulks from "@salesforce/apex/RestCountryController.pushCountriesBulks";
 
 const columns = [
@@ -33,8 +33,8 @@ export default class RestCountry extends LightningElement {
 
   getRestCountries() {
     this.isLoading = true;
-    console.log("getRestCountries");
-    getRestCountries({ strEndPointURL: this.strEndPointURL })
+    console.log("fetchRestCountries");
+    fetchRestCountries({ strEndPointURL: this.strEndPointURL })
       .then((data) => {
         this.formatCountriesData(data);
 

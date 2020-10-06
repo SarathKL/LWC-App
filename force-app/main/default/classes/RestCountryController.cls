@@ -87,7 +87,7 @@ public with sharing class RestCountryController {
   }
 
   @AuraEnabled
-  public static List<Object> getRestCountries(String strEndPointURL) {
+  public static List<Object> fetchRestCountries(String strEndPointURL) {
     List<Object> mapJsonData = new List<Object>();
     String strResponse = null;
 
