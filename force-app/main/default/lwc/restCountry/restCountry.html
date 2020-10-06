@@ -2,7 +2,7 @@
   <lightning-card>
     <lightning-button
       variant="brand"
-      label="Show Data"
+      label="Load Data from Api"
       onclick={handleShowData}
       class="slds-var-m-left_x-small"
     ></lightning-button>
@@ -14,12 +14,20 @@
       class="slds-var-m-left_x-small"
     ></lightning-button>
 
+    <lightning-button
+      variant="brand"
+      label="Load Data From Server"
+      onclick={handleILoadDataFromServer}
+      class="slds-var-m-left_x-small"
+    ></lightning-button>
+
     <template if:true={isLoading}>
       <lightning-spinner
         alternative-text="Loading"
         size="medium"
       ></lightning-spinner>
     </template>
+
     <lightning-datatable key-field="newId" data={countries} columns={COLUMNS}>
     </lightning-datatable>
   </lightning-card>

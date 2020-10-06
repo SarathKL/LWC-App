@@ -1,6 +1,7 @@
 import { LightningElement, track } from "lwc";
 import fetchRestCountries from "@salesforce/apex/RestCountryController.fetchRestCountries";
 import pushCountriesBulks from "@salesforce/apex/RestCountryController.pushCountriesBulks";
+import getRestCountries from "@salesforce/apex/RestCountryController.getRestCountries";
 
 const columns = [
   { label: "Name", fieldName: "name" },
@@ -21,7 +22,7 @@ export default class RestCountry extends LightningElement {
   }
 
   handleShowData() {
-    this.getRestCountries();
+    this.loadApiData();
   }
 
   handleImportData() {
@@ -31,7 +32,7 @@ export default class RestCountry extends LightningElement {
     pushCountriesBulks({ payload: payload });
   }
 
-  getRestCountries() {
+  loadApiData() {
     this.isLoading = true;
     console.log("fetchRestCountries");
     fetchRestCountries({ strEndPointURL: this.strEndPointURL })
@@ -51,5 +52,23 @@ export default class RestCountry extends LightningElement {
       let newId = `new_${index + 1}`;
       return { ...item, newId: newId };
     });
+  }
+
+  handleILoadDataFromServer() {
+    this.loadDataFromServer();
+  }
+
+  loadDataFromServer() {
+    this.isLoading = true;
+    console.log("load data from server");
+    getRestCountries()
+      .then((data) => {
+        this.formatCountriesData(data);
+        console.log(data[0]);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 }
