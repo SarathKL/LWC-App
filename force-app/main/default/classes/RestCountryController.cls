@@ -267,6 +267,15 @@ public with sharing class RestCountryController {
     return pyaload.split(',');
   }
 
+  public static String formatArrayToString(List<String> pyaload) {
+    if (pyaload == null)
+      return '';
+    if (pyaload.size() == 0)
+      return '';
+
+    return String.join(pyaload, ',');
+  }
+
   @AuraEnabled
   public static List<Object> fetchRestCountries(String strEndPointURL) {
     List<Object> mapJsonData = new List<Object>();
@@ -336,29 +345,35 @@ public with sharing class RestCountryController {
         insert myCountry;
         System.debug('myCountry inserted ::: ');
 
-        List<Currency__c> myCountryCurrency = new List<Currency__c>();
-        myCountryCurrency = RestCountryController.pushCurrencies(
-          myWrpCountry,
-          myCountry.Id
-        );
-        insert myCountryCurrency;
-        System.debug('myCountryCurrency inserted ::: ');
+        if (myWrpCountry.currencies != null) {
+          List<Currency__c> myCountryCurrency = new List<Currency__c>();
+          myCountryCurrency = RestCountryController.pushCurrencies(
+            myWrpCountry,
+            myCountry.Id
+          );
+          insert myCountryCurrency;
+          System.debug('myCountryCurrency inserted ::: ');
+        }
 
-        List<Language__c> languages = new List<Language__c>();
-        languages = RestCountryController.pushLanguages(
-          myWrpCountry,
-          myCountry.Id
-        );
-        insert languages;
-        System.debug('languages inserted ::: ');
+        if (myWrpCountry.languages != null) {
+          List<Language__c> languages = new List<Language__c>();
+          languages = RestCountryController.pushLanguages(
+            myWrpCountry,
+            myCountry.Id
+          );
+          insert languages;
+          System.debug('languages inserted ::: ');
+        }
 
-        List<Regional_Block__c> rBlocks = new List<Regional_Block__c>();
-        rBlocks = RestCountryController.pushRegionalBlocks(
-          myWrpCountry,
-          myCountry.Id
-        );
-        insert rBlocks;
-        System.debug('rBlocks inserted ::: ');
+        if (myWrpCountry.regionalBlocs != null) {
+          List<Regional_Block__c> rBlocks = new List<Regional_Block__c>();
+          rBlocks = RestCountryController.pushRegionalBlocks(
+            myWrpCountry,
+            myCountry.Id
+          );
+          insert rBlocks;
+          System.debug('rBlocks inserted ::: ');
+        }
       }
     } catch (Exception ex) {
       System.debug('ERROR ::: ' + ex.getMessage());
@@ -376,8 +391,10 @@ public with sharing class RestCountryController {
 
       myRBlock.Name = myWrpRBlock.name;
       myRBlock.Acronym__c = myWrpRBlock.acronym;
-      myRBlock.Other_Names__c = String.join(myWrpRBlock.otherNames, ',');
-      myRBlock.Other_Acronyms__c = String.join(myWrpRBlock.otherAcronyms, ',');
+      myRBlock.Other_Names__c = formatArrayToString(myWrpRBlock.otherNames);
+      myRBlock.Other_Acronyms__c = formatArrayToString(
+        myWrpRBlock.otherAcronyms
+      );
 
       myRBlock.RestCountry__c = countryId;
 
@@ -433,24 +450,24 @@ public with sharing class RestCountryController {
     RestCountry__c myCountry = new RestCountry__c();
 
     myCountry.Name = myWrpCountry.name;
-    myCountry.Top_Level_Domain__c = String.join(
-      myWrpCountry.topLevelDomain,
-      ','
+    myCountry.Top_Level_Domain__c = formatArrayToString(
+      myWrpCountry.topLevelDomain
     );
+
     myCountry.Alpha_2_Code__c = myWrpCountry.alpha2Code;
     myCountry.Alpha_3_Code__c = myWrpCountry.alpha3Code;
-    myCountry.Calling_Codes__c = String.join(myWrpCountry.callingCodes, ',');
+    myCountry.Calling_Codes__c = formatArrayToString(myWrpCountry.callingCodes);
     myCountry.Capital__c = myWrpCountry.capital;
-    myCountry.Alt_Spellings__c = String.join(myWrpCountry.altSpellings, ',');
+    myCountry.Alt_Spellings__c = formatArrayToString(myWrpCountry.altSpellings);
     myCountry.Region__c = myWrpCountry.region;
     myCountry.Sub_Region__c = myWrpCountry.subregion;
     myCountry.Population__c = myWrpCountry.population;
-    myCountry.Latlng__c = String.join(myWrpCountry.latlng, ',');
+    myCountry.Latlng__c = formatArrayToString(myWrpCountry.latlng);
     myCountry.Demonym__c = myWrpCountry.demonym;
     myCountry.Area__c = myWrpCountry.area;
     myCountry.Gini__c = myWrpCountry.gini;
-    myCountry.Time_Zones__c = String.join(myWrpCountry.timezones, ',');
-    myCountry.Borders__c = String.join(myWrpCountry.borders, ',');
+    myCountry.Time_Zones__c = formatArrayToString(myWrpCountry.timezones);
+    myCountry.Borders__c = formatArrayToString(myWrpCountry.borders);
     myCountry.Native_Name__c = myWrpCountry.nativeName;
     myCountry.Numeric_Code__c = myWrpCountry.numericCode;
     myCountry.Flag__c = myWrpCountry.flag;
