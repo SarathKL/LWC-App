@@ -15,3 +15,10 @@
 	height: 80%;
 	background-color: rgb(169 52 52);
 }
+
+.toolbox .group .item.active,
+.toolbox .group .item:hover {
+	background-color: #f1f7f7;
+	border-style: solid;
+	border-color: #d2dddd;
+}

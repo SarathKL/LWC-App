@@ -15,8 +15,14 @@ export default class PaintApp extends LightningElement {
 	renderedCallback() {
 		this.template.querySelectorAll("[data-tool]").forEach((el) => {
 			el.addEventListener("click", (e) => {
+				this.setSelectedItem(el);
 				console.log(e.target.alt);
 			});
 		});
+	}
+
+	setSelectedItem(el) {
+		this.template.querySelector("[data-tool].active").classList.toggle("active");
+		el.classList.toggle("active");
 	}
 }
