@@ -1,0 +1,17 @@
+.toolbox .group .item {
+	width: 50px;
+	height: 50px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.toolbox .group .item img {
+	width: 100%;
+	height: 100%;
+}
+
+.appCanvas {
+	width: 100%;
+	height: 80%;
+	background-color: rgb(169 52 52);
+}

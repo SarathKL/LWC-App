@@ -1,39 +1,44 @@
 <template>
-  <p>
-    With default attribute values of <code>size</code> and
-    <code>flexibility</code>, layout items take the size of their content and
-    don't occupy entire width of the container.
-  </p>
-  <div
-    class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none"
-  >
-    <lightning-layout>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        ></div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          2
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          3
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          4
-        </div>
-      </lightning-layout-item>
-    </lightning-layout>
-  </div>
+	<lightning-card style="width: 100%">
+		<div class="slds-box slds-p-around_none">
+			<lightning-layout>
+				<lightning-layout-item padding="around-small" size="6">
+					<div class="slds-box slds-p-around_none toolbox left">
+						<span title="">Left</span>
+
+						<lightning-layout class="group tools">
+							<lightning-layout-item size="3">
+								<div class="item active" data-tool="line" title="Line Tool">
+									<img src={TOOL_LINE_ICON} alt={TOOL_LINE} />
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="3">
+								<div class="item" data-tool="rectangle" title="Rectangle Tool">
+									<img src={TOOL_RECTANGLE_ICON} alt={TOOL_RECTANGLE} />
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="3">
+								<div class="item" data-tool="circle" title="Circle Tool">
+									<img src={TOOL_CIRCLE_ICON} alt={TOOL_CIRCLE} />
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="3">
+								<div class="item" data-tool="triangle" title="Triangle Tool">
+									<img src={TOOL_TRIANGLE_ICON} alt={TOOL_TRIANGLE} />
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="6">
+					<span title="">Right</span>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+				<lightning-layout-item padding="around-small" size="12">
+					<canvas id="canvas" class="appCanvas" width="640" height="480"></canvas>
+				</lightning-layout-item>
+			</lightning-layout>
+		</div>
+	</lightning-card>
 </template>
