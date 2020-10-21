@@ -1,6 +1,14 @@
 import { LightningElement } from "lwc";
-import My_Resource from "@salesforce/resourceUrl/paintAppImages";
+import PaintTool from "./paintTool.js";
 
 export default class PaintApp extends LightningElement {
-	tri_icon = My_Resource + "/paintAppImages/tri-icon.png";
+	TOOL_LINE_ICON = PaintTool.TOOL_LINE_ICON;
+	TOOL_RECTANGLE_ICON = PaintTool.TOOL_RECTANGLE_ICON;
+	TOOL_CIRCLE_ICON = PaintTool.TOOL_CIRCLE_ICON;
+	TOOL_TRIANGLE_ICON = PaintTool.TOOL_TRIANGLE_ICON;
+
+	TOOL_LINE = PaintTool.TOOL_LINE;
+	TOOL_RECTANGLE = PaintTool.TOOL_RECTANGLE;
+	TOOL_CIRCLE = PaintTool.TOOL_CIRCLE;
+	TOOL_TRIANGLE = PaintTool.TOOL_TRIANGLE;
 }
