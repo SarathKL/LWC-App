@@ -8,13 +8,12 @@ export default class DrawInCanvas {
 	template = null;
 	startPos = null;
 	savedImage = null;
-	constructor(appCanvas) {
-		//this.template = template;
-		this.appCanvas = appCanvas; //this.template.querySelector(".appCanvas");
-		this.appContext = this.appCanvas.getContext("2d");
+	template = null;
+	constructor(template, canvasElement, ctx) {
+		this.template = template;
+		this.appCanvas = canvasElement;
+		this.appContext = ctx;
 		this.init();
-		// console.log(this.appCanvas);
-		// console.log(this.appContext);
 	}
 	set activeTool(tool) {
 		this.tool = tool;
@@ -22,8 +21,11 @@ export default class DrawInCanvas {
 	}
 
 	init() {
-		console.log("init");
-		this.appCanvas.onmousedown = (e) => this.onMouseDown(e);
+		this.appCanvas.addEventListener("mousedown", (e) => {
+			this.onMouseDown(e);
+		});
+
+		//this.appCanvas.onmousedown = (e) => this.onMouseDown(e);
 	}
 	onMouseDown(e) {
 		this.savedImage = this.appContext.getImageData(
@@ -33,12 +35,17 @@ export default class DrawInCanvas {
 			this.appContext.canvas.height
 		);
 
-		this.appCanvas.onmousemove = (e) => this.onMouseMove(e);
-		this.appCanvas.onmouseup = (e) => this.onMouseUp(e);
+		this.appCanvas.addEventListener("mousemove", (e) => {
+			this.onMouseMove(e);
+		});
+		this.template.addEventListener("mouseup", (e) => {
+			this.onMouseUp(e);
+		});
 
 		this.startPos = Utility.getMouseCoordsOnCanvas(this.appCanvas, e);
-		console.log(this.startPos);
+		//console.log(this.startPos);
 	}
+
 	onMouseMove(e) {
 		this.currentPos = Utility.getMouseCoordsOnCanvas(this.appCanvas, e);
 
@@ -54,8 +61,22 @@ export default class DrawInCanvas {
 		}
 	}
 	onMouseUp(e) {
-		this.appCanvas.onmousemove = null;
-		this.appCanvas.onmouseup = null;
+		//this.appCanvas.removeEventListener("mousemove", this.handleEvent.bind(this), false);
+
+		this.appCanvas.removeEventListener(
+			"mousemove",
+			(e) => {
+				this.onMouseMove(e);
+			},
+			false
+		);
+		this.template.removeEventListener(
+			"mouseup",
+			(e) => {
+				this.onMouseUp(e);
+			},
+			false
+		);
 	}
 
 	drawShape() {
