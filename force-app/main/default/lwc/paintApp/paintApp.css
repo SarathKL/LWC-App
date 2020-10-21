@@ -11,9 +11,10 @@
 }
 
 .appCanvas {
-	width: 100%;
-	height: 80%;
-	background-color: rgb(169 52 52);
+	background-color: rgb(218, 146, 146);
+	cursor: pointer;
+	border-style: solid;
+	border-color: #477474;
 }
 
 .toolbox .group .item.active,
