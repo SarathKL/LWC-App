@@ -11,4 +11,12 @@ export default class PaintApp extends LightningElement {
 	TOOL_RECTANGLE = PaintTool.TOOL_RECTANGLE;
 	TOOL_CIRCLE = PaintTool.TOOL_CIRCLE;
 	TOOL_TRIANGLE = PaintTool.TOOL_TRIANGLE;
+
+	renderedCallback() {
+		this.template.querySelectorAll("[data-tool]").forEach((el) => {
+			el.addEventListener("click", (e) => {
+				console.log(e.target.alt);
+			});
+		});
+	}
 }
