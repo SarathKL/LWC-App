@@ -24,7 +24,6 @@ export default class DrawInCanvas {
 		this.appCanvas.addEventListener("mousedown", (e) => {
 			this.onMouseDown(e);
 		});
-
 		//this.appCanvas.onmousedown = (e) => this.onMouseDown(e);
 	}
 	onMouseDown(e) {
@@ -35,6 +34,7 @@ export default class DrawInCanvas {
 			this.appContext.canvas.height
 		);
 
+		//doto:: add listener, to get moved coordinate
 		this.appCanvas.addEventListener("mousemove", (e) => {
 			this.onMouseMove(e);
 		});
@@ -63,6 +63,7 @@ export default class DrawInCanvas {
 	onMouseUp(e) {
 		//this.appCanvas.removeEventListener("mousemove", this.handleEvent.bind(this), false);
 
+		//doto::want to removed those listeners,after mouseup listener user can not draw anything.
 		this.appCanvas.removeEventListener(
 			"mousemove",
 			(e) => {
@@ -82,7 +83,6 @@ export default class DrawInCanvas {
 	drawShape() {
 		this.appContext.putImageData(this.savedImage, 0, 0);
 		this.appContext.beginPath();
-		//this.appContext.lineWidth = this._lineWidth;
 
 		if (TOOL_LINE === this.tool) {
 			this.appContext.moveTo(this.startPos.x, this.startPos.y);
